@@ -1,0 +1,260 @@
+export const channels = [
+  {
+    id: 1,
+    name: 'Tech Reviews Pro',
+    niche: 'Technology',
+    subscribers: '250K',
+    monthlyRevenue: '$8,500',
+    price: '125,000',
+    verified: true,
+    monetized: true,
+    country: 'United States',
+    avgViews: '45K',
+    engagement: '4.2%',
+    banner: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=450&fit=crop',
+    description: 'Established tech review channel with consistent growth and engaged audience.',
+    seller: {
+      name: 'John Smith',
+      rating: 4.8,
+      sales: 12,
+    }
+  },
+  {
+    id: 2,
+    name: 'Fitness Journey',
+    niche: 'Health & Fitness',
+    subscribers: '180K',
+    monthlyRevenue: '$5,200',
+    price: '78,000',
+    verified: true,
+    monetized: true,
+    country: 'United Kingdom',
+    avgViews: '32K',
+    engagement: '5.1%',
+    banner: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=450&fit=crop',
+    description: 'Growing fitness channel with loyal community and multiple revenue streams.',
+    seller: {
+      name: 'Sarah Johnson',
+      rating: 4.9,
+      sales: 8,
+    }
+  },
+  {
+    id: 3,
+    name: 'Gaming Legends',
+    niche: 'Gaming',
+    subscribers: '420K',
+    monthlyRevenue: '$12,300',
+    price: '185,000',
+    verified: true,
+    monetized: true,
+    country: 'Canada',
+    avgViews: '78K',
+    engagement: '6.3%',
+    banner: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=450&fit=crop',
+    description: 'Popular gaming channel with high engagement and sponsorship opportunities.',
+    seller: {
+      name: 'Mike Chen',
+      rating: 4.7,
+      sales: 15,
+    }
+  },
+  {
+    id: 4,
+    name: 'Cooking Made Easy',
+    niche: 'Food & Cooking',
+    subscribers: '95K',
+    monthlyRevenue: '$3,100',
+    price: '42,000',
+    verified: false,
+    monetized: true,
+    country: 'Australia',
+    avgViews: '18K',
+    engagement: '4.8%',
+    banner: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=450&fit=crop',
+    description: 'Niche cooking channel with dedicated audience and growth potential.',
+    seller: {
+      name: 'Emma Wilson',
+      rating: 4.6,
+      sales: 5,
+    }
+  },
+  {
+    id: 5,
+    name: 'Travel Diaries',
+    niche: 'Travel & Lifestyle',
+    subscribers: '310K',
+    monthlyRevenue: '$9,800',
+    price: '145,000',
+    verified: true,
+    monetized: true,
+    country: 'United States',
+    avgViews: '52K',
+    engagement: '5.5%',
+    banner: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=450&fit=crop',
+    description: 'Stunning travel content with international audience and brand deals.',
+    seller: {
+      name: 'Alex Rodriguez',
+      rating: 4.9,
+      sales: 10,
+    }
+  },
+  {
+    id: 6,
+    name: 'Finance Simplified',
+    niche: 'Finance & Business',
+    subscribers: '140K',
+    monthlyRevenue: '$6,700',
+    price: '95,000',
+    verified: true,
+    monetized: true,
+    country: 'United States',
+    avgViews: '28K',
+    engagement: '4.5%',
+    banner: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop',
+    description: 'Educational finance channel with professional content and steady growth.',
+    seller: {
+      name: 'David Lee',
+      rating: 4.8,
+      sales: 7,
+    }
+  },
+]
+
+export const conversations = [
+  {
+    id: 1,
+    user: 'Sarah Johnson',
+    lastMessage: 'Is the channel still available?',
+    time: '2m ago',
+    unread: 2,
+    avatar: 'SJ',
+  },
+  {
+    id: 2,
+    user: 'Mike Chen',
+    lastMessage: 'Can we schedule a call to discuss?',
+    time: '1h ago',
+    unread: 0,
+    avatar: 'MC',
+  },
+  {
+    id: 3,
+    user: 'Emma Wilson',
+    lastMessage: 'Thanks for the information!',
+    time: '3h ago',
+    unread: 0,
+    avatar: 'EW',
+  },
+]
+
+export const messages = [
+  {
+    id: 1,
+    sender: 'buyer',
+    text: 'Hi, I\'m interested in your Tech Reviews Pro channel.',
+    time: '10:30 AM',
+  },
+  {
+    id: 2,
+    sender: 'seller',
+    text: 'Hello! Thanks for your interest. What would you like to know?',
+    time: '10:32 AM',
+  },
+  {
+    id: 3,
+    sender: 'buyer',
+    text: 'Can you provide more details about the revenue breakdown?',
+    time: '10:35 AM',
+  },
+  {
+    id: 4,
+    sender: 'seller',
+    text: 'Sure! The revenue comes from AdSense ($5,500), sponsorships ($2,500), and affiliate links ($500).',
+    time: '10:37 AM',
+  },
+]
+
+export const transactions = [
+  {
+    id: 'TXN-001',
+    channel: 'Tech Reviews Pro',
+    amount: '$125,000',
+    date: '2026-02-15',
+    status: 'Completed',
+  },
+  {
+    id: 'TXN-002',
+    channel: 'Fitness Journey',
+    amount: '$78,000',
+    date: '2026-02-10',
+    status: 'In Escrow',
+  },
+  {
+    id: 'TXN-003',
+    channel: 'Gaming Legends',
+    amount: '$185,000',
+    date: '2026-02-05',
+    status: 'Pending',
+  },
+]
+
+export const listings = [
+  {
+    id: 1,
+    channel: 'Tech Reviews Pro',
+    channelUrl: 'https://youtube.com/@techreviewspro',
+    price: '$125,000',
+    status: 'Active',
+    views: 342,
+    inquiries: 12,
+    listed: '2026-01-15',
+  },
+  {
+    id: 2,
+    channel: 'Cooking Made Easy',
+    channelUrl: 'https://youtube.com/@cookingmadeeasy',
+    price: '$42,000',
+    status: 'Pending Approval',
+    views: 0,
+    inquiries: 0,
+    listed: '2026-02-16',
+  },
+  {
+    id: 3,
+    channel: 'Finance Simplified',
+    channelUrl: 'https://youtube.com/@financesimplified',
+    price: '$95,000',
+    status: 'Sold',
+    views: 521,
+    inquiries: 28,
+    listed: '2026-01-05',
+  },
+]
+
+export const users = [
+  {
+    id: 1,
+    name: 'John Smith',
+    email: 'john@example.com',
+    role: 'Seller',
+    joined: '2025-11-20',
+    status: 'Active',
+  },
+  {
+    id: 2,
+    name: 'Sarah Johnson',
+    email: 'sarah@example.com',
+    role: 'Buyer',
+    joined: '2025-12-10',
+    status: 'Active',
+  },
+  {
+    id: 3,
+    name: 'Mike Chen',
+    email: 'mike@example.com',
+    role: 'Seller',
+    joined: '2025-10-05',
+    status: 'Active',
+  },
+]
