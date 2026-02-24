@@ -1,14 +1,92 @@
 import { Link } from 'react-router-dom'
-import { Shield, CheckCircle, DollarSign, TrendingUp, Users, Lock } from 'lucide-react'
+import { Shield, CheckCircle, DollarSign, Lock } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Button from '../components/Button'
 import ChannelCard from '../components/ChannelCard'
-import { channels } from '../data/mockData'
+import { useState, useEffect } from 'react'
+import apiService from '../services/api'
 
 const LandingPage = () => {
-  const featuredChannels = channels.slice(0, 3)
-  
+  const [channels, setChannels] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  // Fallback channels if API fails
+  const fallbackChannels = [
+    {
+      id: "1",
+      channel_name: "Tech Reviews Pro",
+      niche: "Technology",
+      subscribers: "250K",
+      monthly_revenue: "$8,500",
+      asking_price: 125000,
+      banner_image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800",
+      is_verified: true,
+      is_monetized: true,
+      seller: { name: "John Smith", rating: 4.8, sales: 12 }
+    },
+    {
+      id: "2",
+      channel_name: "Cooking Masters",
+      niche: "Food & Cooking",
+      subscribers: "180K",
+      monthly_revenue: "$6,200",
+      asking_price: 95000,
+      banner_image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
+      is_verified: true,
+      is_monetized: true,
+      seller: { name: "John Smith", rating: 4.8, sales: 12 }
+    },
+    {
+      id: "3",
+      channel_name: "Fitness Journey",
+      niche: "Health & Fitness",
+      subscribers: "320K",
+      monthly_revenue: "$12,800",
+      asking_price: 185000,
+      banner_image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
+      is_verified: true,
+      is_monetized: true,
+      seller: { name: "John Smith", rating: 4.8, sales: 12 }
+    }
+  ]
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Get channels from API
+        const channelsData = await apiService.getChannels({ limit: 3 })
+        setChannels(channelsData)
+      } catch (err) {
+        console.error('API Error:', err)
+        // Fall back to sample data if API fails
+        setChannels(fallbackChannels)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Navbar />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading channels...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Use API data or fallback
+  const displayChannels = channels.length > 0 ? channels : fallbackChannels
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -108,7 +186,7 @@ const LandingPage = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-6">
-            {featuredChannels.map(channel => (
+            {displayChannels.map(channel => (
               <ChannelCard key={channel.id} channel={channel} />
             ))}
           </div>

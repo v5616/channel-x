@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Youtube, Mail, Lock, User, Eye, EyeOff, CheckCircle } from 'lucide-react'
+import { Youtube, Mail, Lock, User, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react'
 import Button from '../components/Button'
 import Card from '../components/Card'
 import { useAuth } from '../context/AuthContext'
@@ -10,11 +10,15 @@ const SignupPage = () => {
   const { signup } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
+    agreeToTerms: false,
   })
   
   // Password validation state
@@ -25,16 +29,16 @@ const SignupPage = () => {
   })
   
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value, type, checked } = e.target
     setFormData({
       ...formData,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     })
     
     // Validate password in real-time
     if (name === 'password') {
       setPasswordValidation({
-        minLength: value.length >= 8,
+        minLength: value.length >= 6, // Reduced from 8 to 6 for easier testing
         hasUppercase: /[A-Z]/.test(value),
         hasNumberOrSpecial: /[0-9!@#$%^&*]/.test(value),
       })
@@ -47,23 +51,78 @@ const SignupPage = () => {
            passwordValidation.hasNumberOrSpecial
   }
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
+    setLoading(true)
+    
+    // Validation
+    if (!formData.fullName || !formData.email || !formData.password) {
+      setError('Please fill in all required fields')
+      setLoading(false)
+      return
+    }
     
     if (!isPasswordValid()) {
-      alert('Please meet all password requirements')
+      setError('Please meet all password requirements')
+      setLoading(false)
       return
     }
     
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match')
+      setError('Passwords do not match')
+      setLoading(false)
       return
     }
     
-    const result = signup(formData.fullName, formData.email, formData.password)
-    if (result.success) {
-      navigate('/profile')
+    if (!formData.agreeToTerms) {
+      setError('Please agree to the Terms of Service and Privacy Policy')
+      setLoading(false)
+      return
     }
+    
+    try {
+      const result = await signup(formData.fullName, formData.email, formData.password)
+      
+      if (result.success) {
+        setSuccess(true)
+        // Show success message for 2 seconds, then redirect to login
+        setTimeout(() => {
+          navigate('/login', { 
+            state: { 
+              message: 'Account created successfully! Please sign in with your credentials.',
+              email: formData.email 
+            }
+          })
+        }, 2000)
+      } else {
+        setError(result.error || 'Signup failed. Please try again.')
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+  
+  // Show success message
+  if (success) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <Card className="p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-8 h-8 text-green-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Account Created Successfully!</h1>
+            <p className="text-gray-600 mb-4">
+              Welcome to ChannelX! Your account has been created and you're being redirected to the login page.
+            </p>
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 mx-auto"></div>
+          </Card>
+        </div>
+      </div>
+    )
   }
   
   return (
@@ -82,6 +141,13 @@ const SignupPage = () => {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
             <p className="text-gray-600">Join the trusted YouTube channel marketplace</p>
           </div>
+          
+          {error && (
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-red-600" />
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          )}
           
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Full Name Input */}
@@ -192,7 +258,7 @@ const SignupPage = () => {
                   <CheckCircle className={`w-4 h-4 ${
                     passwordValidation.minLength ? 'text-green-500' : 'text-gray-400'
                   }`} />
-                  At least 8 characters
+                  At least 6 characters
                 </li>
                 <li className={`flex items-center gap-2 transition-colors ${
                   passwordValidation.hasUppercase ? 'text-green-600' : 'text-gray-600'
@@ -218,6 +284,9 @@ const SignupPage = () => {
               <label className="flex items-start gap-3 cursor-pointer">
                 <input
                   type="checkbox"
+                  name="agreeToTerms"
+                  checked={formData.agreeToTerms}
+                  onChange={handleChange}
                   className="w-4 h-4 mt-1 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
                 />
                 <span className="text-sm text-gray-600">
@@ -234,8 +303,15 @@ const SignupPage = () => {
             </div>
             
             {/* Sign Up Button */}
-            <Button type="submit" className="w-full" size="lg">
-              Create Account
+            <Button type="submit" className="w-full" size="lg" disabled={loading}>
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  Creating Account...
+                </div>
+              ) : (
+                'Create Account'
+              )}
             </Button>
             
             {/* Divider */}

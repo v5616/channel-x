@@ -1,28 +1,87 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Youtube, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Youtube, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import Button from '../components/Button'
 import Card from '../components/Card'
 import { useAuth } from '../context/AuthContext'
 
 const LoginPage = () => {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const location = useLocation()
+  const { login, user } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
   
-  const handleSubmit = (e) => {
+  // Check for success message from signup
+  useEffect(() => {
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message)
+      if (location.state?.email) {
+        setEmail(location.state.email)
+      }
+    }
+  }, [location.state])
+  
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/buyer/dashboard')
+    }
+  }, [user, navigate])
+  
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    setLoading(true)
     
-    const result = login(email, password)
-    if (result.success) {
-      navigate('/profile')
-    } else {
-      setError(result.error)
+    if (!email || !password) {
+      setError('Please enter both email and password')
+      setLoading(false)
+      return
     }
+    
+    try {
+      const result = await login(email, password)
+      
+      if (result.success) {
+        setSuccess(true)
+        setSuccessMessage('Login successful! Redirecting to dashboard...')
+        
+        // Redirect to dashboard after 1.5 seconds
+        setTimeout(() => {
+          navigate('/buyer/dashboard')
+        }, 1500)
+      } else {
+        setError(result.error || 'Login failed. Please check your credentials.')
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+  
+  // Show success message
+  if (success) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <Card className="p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-8 h-8 text-green-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Login Successful!</h1>
+            <p className="text-gray-600 mb-4">{successMessage}</p>
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-600 mx-auto"></div>
+          </Card>
+        </div>
+      </div>
+    )
   }
   
   return (
@@ -41,6 +100,14 @@ const LoginPage = () => {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
             <p className="text-gray-600">Sign in to your account to continue</p>
           </div>
+          
+          {/* Success message from signup */}
+          {successMessage && (
+            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+              <p className="text-sm text-green-700">{successMessage}</p>
+            </div>
+          )}
           
           {/* Demo Credentials Info */}
           <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
@@ -119,8 +186,15 @@ const LoginPage = () => {
             </div>
             
             {/* Login Button */}
-            <Button type="submit" className="w-full" size="lg">
-              Sign In
+            <Button type="submit" className="w-full" size="lg" disabled={loading}>
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  Signing In...
+                </div>
+              ) : (
+                'Sign In'
+              )}
             </Button>
             
             {/* Divider */}

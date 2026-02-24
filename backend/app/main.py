@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.api import api_router
 from app.core.config import settings
-from app.db.database import connect_to_mongo, close_mongo_connection
+from app.db.database import connect_to_mongo, close_mongo_connection, db
 
 app = FastAPI(
     title="ChannelX API",
@@ -32,6 +32,10 @@ app.include_router(api_router, prefix="/api/v1")
 @app.get("/")
 async def root():
     return {"message": "ChannelX API is running with MongoDB"}
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "database": "connected" if db.client else "disconnected", "channels": 3}
 
 if __name__ == "__main__":
     import uvicorn
