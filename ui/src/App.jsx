@@ -12,6 +12,7 @@ import SellerDashboard from './pages/SellerDashboard'
 import BuyerDashboard from './pages/BuyerDashboard'
 import AdminDashboard from './pages/AdminDashboard'
 import ChatPage from './pages/ChatPage'
+import ApiTestPage from './pages/ApiTestPage'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/buyer/dashboard" element={<BuyerDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/chat" element={<ChatPage />} />
+          <Route path="/api-test" element={<ApiTestPage />} />
         </Routes>
       </AuthProvider>
     </Router>

@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import apiService from '../services/api'
 
 const AuthContext = createContext()
 
@@ -15,53 +16,74 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Demo credentials
-  const DEMO_USER = {
-    email: 'test@gmail.com',
-    password: 'test@123',
-    name: 'John Smith',
-    id: 1,
-  }
-
   useEffect(() => {
-    // Check if user is logged in (from localStorage)
-    const storedUser = localStorage.getItem('channelx_user')
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
+    // Check if user is logged in (has token)
+    const token = localStorage.getItem('channelx_token')
+    if (token) {
+      // Try to get current user from API
+      apiService.getCurrentUser()
+        .then(userData => {
+          setUser(userData)
+        })
+        .catch(error => {
+          console.error('Failed to get current user:', error)
+          // Token might be invalid, remove it
+          localStorage.removeItem('channelx_token')
+          apiService.logout()
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    } else {
+      setLoading(false)
     }
-    setLoading(false)
   }, [])
 
-  const login = (email, password) => {
-    // Simple demo authentication
-    if (email === DEMO_USER.email && password === DEMO_USER.password) {
-      const userData = {
-        id: DEMO_USER.id,
-        name: DEMO_USER.name,
-        email: DEMO_USER.email,
+  const login = async (email, password) => {
+    try {
+      setLoading(true)
+      const response = await apiService.login(email, password)
+      
+      if (response.access_token) {
+        // Get user data after successful login
+        const userData = await apiService.getCurrentUser()
+        setUser(userData)
+        return { success: true }
       }
-      setUser(userData)
-      localStorage.setItem('channelx_user', JSON.stringify(userData))
-      return { success: true }
+      
+      return { success: false, error: 'Login failed' }
+    } catch (error) {
+      console.error('Login error:', error)
+      return { success: false, error: error.message || 'Login failed' }
+    } finally {
+      setLoading(false)
     }
-    return { success: false, error: 'Invalid credentials' }
   }
 
-  const signup = (name, email, password) => {
-    // Simple demo signup
-    const userData = {
-      id: Date.now(),
-      name,
-      email,
+  const signup = async (name, email, password) => {
+    try {
+      setLoading(true)
+      const response = await apiService.signup(name, email, password)
+      
+      if (response.access_token) {
+        // Get user data after successful signup
+        const userData = await apiService.getCurrentUser()
+        setUser(userData)
+        return { success: true }
+      }
+      
+      return { success: false, error: 'Signup failed' }
+    } catch (error) {
+      console.error('Signup error:', error)
+      return { success: false, error: error.message || 'Signup failed' }
+    } finally {
+      setLoading(false)
     }
-    setUser(userData)
-    localStorage.setItem('channelx_user', JSON.stringify(userData))
-    return { success: true }
   }
 
   const logout = () => {
+    apiService.logout()
     setUser(null)
-    localStorage.removeItem('channelx_user')
   }
 
   return (
