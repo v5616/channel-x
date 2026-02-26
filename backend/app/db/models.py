@@ -22,6 +22,8 @@ class TransactionStatus(str, Enum):
     COMPLETED = "completed"
     CANCELLED = "cancelled"
 
+
+
 class User(Document):
     email: Indexed(str, unique=True)
     full_name: str
