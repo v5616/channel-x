@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import apiService from '../services/api'
 
 // Custom hook for API calls with loading and error states
+// custom hooks
 export function useApi(apiCall, dependencies = []) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
