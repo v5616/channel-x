@@ -39,6 +39,15 @@ mock_users = {
         "role": "buyer",
         "is_verified": True,
         "created_at": datetime.utcnow()
+    },
+    "vishal@gmail.com": {
+        "id": "2",
+        "email": "vishal@gmail.com",
+        "full_name": "Vishal Singh",
+        "hashed_password": "Vishal@2000",  # Simple mock password
+        "role": "buyer",
+        "is_verified": True,
+        "created_at": datetime.utcnow()
     }
 }
 
@@ -208,10 +217,18 @@ async def login_json(user_data: dict):
     email = user_data.get("email")
     password = user_data.get("password")
     
+    print(f"🔐 Login attempt - Email: {email}, Password: {password}")
+    
     user = mock_users.get(email)
-    if not user or not verify_password(password, user["hashed_password"]):
+    if not user:
+        print(f"❌ User not found: {email}")
         raise HTTPException(status_code=401, detail="Incorrect email or password")
     
+    if not verify_password(password, user["hashed_password"]):
+        print(f"❌ Password mismatch - Received: '{password}', Expected: '{user['hashed_password']}'")
+        raise HTTPException(status_code=401, detail="Incorrect email or password")
+    
+    print(f"✅ Login successful for: {email}")
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user["email"]}, expires_delta=access_token_expires

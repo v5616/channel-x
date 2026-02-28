@@ -3,10 +3,108 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from app.db.models import ChannelListing, User, ListingStatus
 from app.schemas.channel import ChannelListingCreate, ChannelListing as ChannelListingSchema, ChannelListingWithSeller
 from app.api.v1.endpoints.auth import get_current_user
+from app.db.database import db
 from beanie import PydanticObjectId
 from datetime import datetime
 
 router = APIRouter()
+
+# Mock data fallback
+mock_channels = [
+    {
+        "id": "1",
+        "seller_id": "1",
+        "channel_name": "Tech Reviews Pro",
+        "channel_url": "https://youtube.com/@techreviewspro",
+        "niche": "Technology",
+        "subscribers": "250K",
+        "monthly_revenue": "$8,500",
+        "asking_price": 125000,
+        "description": "Established tech review channel with consistent growth and high engagement rates.",
+        "is_monetized": True,
+        "is_verified": True,
+        "status": "active",
+        "views": 45,
+        "inquiries": 12,
+        "country": "United States",
+        "avg_views": "45K",
+        "engagement_rate": "4.2%",
+        "banner_image": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800",
+        "images": [],
+        "links": [],
+        "created_at": datetime.utcnow(),
+        "updated_at": None,
+        "seller": {
+            "id": "1",
+            "name": "John Smith",
+            "email": "test@gmail.com",
+            "rating": 4.8,
+            "sales": 12
+        }
+    },
+    {
+        "id": "2",
+        "seller_id": "1",
+        "channel_name": "Cooking Masters",
+        "channel_url": "https://youtube.com/@cookingmasters",
+        "niche": "Food & Cooking",
+        "subscribers": "180K",
+        "monthly_revenue": "$6,200",
+        "asking_price": 95000,
+        "description": "Popular cooking channel featuring easy recipes and cooking tips.",
+        "is_monetized": True,
+        "is_verified": True,
+        "status": "active",
+        "views": 32,
+        "inquiries": 8,
+        "country": "Canada",
+        "avg_views": "35K",
+        "engagement_rate": "3.8%",
+        "banner_image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
+        "images": [],
+        "links": [],
+        "created_at": datetime.utcnow(),
+        "updated_at": None,
+        "seller": {
+            "id": "1",
+            "name": "John Smith",
+            "email": "test@gmail.com",
+            "rating": 4.8,
+            "sales": 12
+        }
+    },
+    {
+        "id": "3",
+        "seller_id": "1",
+        "channel_name": "Fitness Journey",
+        "channel_url": "https://youtube.com/@fitnessjourney",
+        "niche": "Health & Fitness",
+        "subscribers": "320K",
+        "monthly_revenue": "$12,800",
+        "asking_price": 185000,
+        "description": "Motivational fitness channel with workout routines and nutrition advice.",
+        "is_monetized": True,
+        "is_verified": True,
+        "status": "active",
+        "views": 67,
+        "inquiries": 18,
+        "country": "United Kingdom",
+        "avg_views": "58K",
+        "engagement_rate": "5.1%",
+        "banner_image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800",
+        "images": [],
+        "links": [],
+        "created_at": datetime.utcnow(),
+        "updated_at": None,
+        "seller": {
+            "id": "1",
+            "name": "John Smith",
+            "email": "test@gmail.com",
+            "rating": 4.8,
+            "sales": 12
+        }
+    }
+]
 
 @router.get("/", response_model=List[ChannelListingWithSeller])
 async def get_channels(
@@ -17,7 +115,25 @@ async def get_channels(
     max_price: Optional[float] = None,
     monetized: Optional[bool] = None,
 ):
-    # Build query filters
+    # Check if database is connected
+    if not db.client:
+        # Use mock data
+        filtered_channels = mock_channels.copy()
+        
+        # Apply filters
+        if niche:
+            filtered_channels = [c for c in filtered_channels if niche.lower() in c["niche"].lower()]
+        if min_price:
+            filtered_channels = [c for c in filtered_channels if c["asking_price"] >= min_price]
+        if max_price:
+            filtered_channels = [c for c in filtered_channels if c["asking_price"] <= max_price]
+        if monetized is not None:
+            filtered_channels = [c for c in filtered_channels if c["is_monetized"] == monetized]
+        
+        # Apply pagination
+        return filtered_channels[skip:skip + limit]
+    
+    # Build query filters for MongoDB
     filters = {"status": ListingStatus.ACTIVE}
     
     if niche:
@@ -52,6 +168,16 @@ async def get_channels(
 
 @router.get("/{channel_id}", response_model=ChannelListingWithSeller)
 async def get_channel(channel_id: str):
+    # Check if database is connected
+    if not db.client:
+        # Use mock data
+        for channel in mock_channels:
+            if channel["id"] == channel_id:
+                # Increment views (mock)
+                channel["views"] += 1
+                return channel
+        raise HTTPException(status_code=404, detail="Channel not found")
+    
     channel = await ChannelListing.get(PydanticObjectId(channel_id))
     if not channel:
         raise HTTPException(status_code=404, detail="Channel not found")
