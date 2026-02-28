@@ -1,18 +1,51 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from app.core.config import settings
 from app.core.security import create_access_token, verify_password, get_password_hash, verify_token
-from app.db.models import User
+from app.db.models import User, UserRole
+from app.db.database import db
 from app.schemas.user import UserCreate, UserLogin, User as UserSchema, Token
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/auth/login")
 
+# Mock user data for fallback
+mock_users = {
+    "test@gmail.com": {
+        "id": "1",
+        "email": "test@gmail.com",
+        "full_name": "John Smith",
+        "hashed_password": get_password_hash("test@123"),
+        "role": UserRole.BUYER,
+        "is_verified": True,
+        "created_at": datetime.utcnow()
+    }
+}
+
 async def get_user_by_email(email: str):
+    # Check if database is connected
+    if not db.client:
+        # Use mock data
+        return mock_users.get(email)
     return await User.find_one(User.email == email)
 
 async def create_user(user: UserCreate):
+    # Check if database is connected
+    if not db.client:
+        # Use mock data
+        new_user = {
+            "id": str(len(mock_users) + 1),
+            "email": user.email,
+            "full_name": user.full_name,
+            "hashed_password": get_password_hash(user.password),
+            "role": UserRole.BUYER,
+            "is_verified": False,
+            "created_at": datetime.utcnow()
+        }
+        mock_users[user.email] = new_user
+        return new_user
+    
     hashed_password = get_password_hash(user.password)
     db_user = User(
         email=user.email,
@@ -26,7 +59,14 @@ async def authenticate_user(email: str, password: str):
     user = await get_user_by_email(email)
     if not user:
         return False
-    if not verify_password(password, user.hashed_password):
+    
+    # Handle both dict (mock) and User object (database)
+    if isinstance(user, dict):
+        hashed_password = user.get("hashed_password")
+    else:
+        hashed_password = user.hashed_password
+    
+    if not verify_password(password, hashed_password):
         return False
     return user
 
@@ -65,9 +105,13 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    
+    # Handle both dict (mock) and User object (database)
+    email = user.get("email") if isinstance(user, dict) else user.email
+    
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
+        data={"sub": email}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -79,9 +123,13 @@ async def login_json(user_login: UserLogin):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
         )
+    
+    # Handle both dict (mock) and User object (database)
+    email = user.get("email") if isinstance(user, dict) else user.email
+    
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
+        data={"sub": email}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
