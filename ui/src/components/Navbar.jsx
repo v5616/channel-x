@@ -20,20 +20,20 @@ const Navbar = ({ transparent = false }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-2">
-            <div className="p-2 bg-gradient-to-br from-primary-600 to-blue-600 rounded-xl shadow-lg">
+            <div className="p-2 bg-gradient-to-br from-primary-600 to-orange-600 rounded-xl shadow-lg">
               <Youtube className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 bg-clip-text text-transparent">ChannelX</span>
+            <span className="text-xl font-black bg-gradient-to-r from-primary-600 to-orange-600 bg-clip-text text-transparent">ChannelX</span>
           </Link>
           
           <div className="hidden md:flex items-center gap-8">
-            <Link to="/marketplace" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link to="/marketplace" className="text-neutral-600 hover:text-primary-600 transition-colors font-medium">
               Marketplace
             </Link>
-            <Link to={user ? "/seller/dashboard" : "/login"} className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link to={user ? "/seller/dashboard" : "/login"} className="text-neutral-600 hover:text-primary-600 transition-colors font-medium">
               Sell
             </Link>
-            <Link to="/how-it-works" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link to="/how-it-works" className="text-neutral-600 hover:text-primary-600 transition-colors font-medium">
               How it Works
             </Link>
           </div>
