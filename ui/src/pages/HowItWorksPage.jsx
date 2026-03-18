@@ -68,11 +68,11 @@ const HowItWorksPage = () => {
             
             {/* Step 2 */}
             <div className="relative group">
-              <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-accent-300 hover:shadow-2xl transition-all">
-                <div className="w-14 h-14 bg-gradient-to-br from-accent-500 to-yellow-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-orange-300 hover:shadow-2xl transition-all">
+                <div className="w-14 h-14 bg-gradient-to-br from-orange-400 to-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
                   <FileCheck className="w-7 h-7 text-white" />
                 </div>
-                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-accent-600 to-yellow-600 text-white rounded-full flex items-center justify-center font-black text-lg shadow-lg">
+                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 text-white rounded-full flex items-center justify-center font-black text-lg shadow-lg">
                   2
                 </div>
                 <h3 className="text-xl font-black text-neutral-900 mb-3">Review Details</h3>
@@ -100,11 +100,11 @@ const HowItWorksPage = () => {
             
             {/* Step 4 */}
             <div className="relative group">
-              <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-accent-300 hover:shadow-2xl transition-all">
-                <div className="w-14 h-14 bg-gradient-to-br from-accent-500 to-primary-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-primary-300 hover:shadow-2xl transition-all">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary-600 to-orange-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
                   <Shield className="w-7 h-7 text-white" />
                 </div>
-                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-accent-600 to-primary-600 text-white rounded-full flex items-center justify-center font-black text-lg shadow-lg">
+                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-primary-600 to-orange-600 text-white rounded-full flex items-center justify-center font-black text-lg shadow-lg">
                   4
                 </div>
                 <h3 className="text-xl font-black text-neutral-900 mb-3">Secure Purchase</h3>
@@ -148,11 +148,11 @@ const HowItWorksPage = () => {
             
             {/* Step 2 */}
             <div className="relative group">
-              <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-accent-300 hover:shadow-2xl transition-all">
-                <div className="w-14 h-14 bg-gradient-to-br from-accent-500 to-yellow-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-orange-300 hover:shadow-2xl transition-all">
+                <div className="w-14 h-14 bg-gradient-to-br from-orange-400 to-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
                   <Package className="w-7 h-7 text-white" />
                 </div>
-                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-accent-600 to-yellow-600 text-white rounded-full flex items-center justify-center font-black text-lg shadow-lg">
+                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 text-white rounded-full flex items-center justify-center font-black text-lg shadow-lg">
                   2
                 </div>
                 <h3 className="text-xl font-black text-neutral-900 mb-3">List Your Channel</h3>
@@ -180,11 +180,11 @@ const HowItWorksPage = () => {
             
             {/* Step 4 */}
             <div className="relative group">
-              <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-accent-300 hover:shadow-2xl transition-all">
-                <div className="w-14 h-14 bg-gradient-to-br from-accent-500 to-primary-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-primary-300 hover:shadow-2xl transition-all">
+                <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
                   <DollarSign className="w-7 h-7 text-white" />
                 </div>
-                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-accent-600 to-primary-600 text-white rounded-full flex items-center justify-center font-black text-lg shadow-lg">
+                <div className="absolute -top-4 -right-4 w-10 h-10 bg-gradient-to-br from-emerald-600 to-teal-600 text-white rounded-full flex items-center justify-center font-black text-lg shadow-lg">
                   4
                 </div>
                 <h3 className="text-xl font-black text-neutral-900 mb-3">Get Paid</h3>
@@ -220,8 +220,8 @@ const HowItWorksPage = () => {
               </p>
             </div>
             
-            <div className="bg-white rounded-3xl p-10 text-center shadow-xl border-2 border-orange-100 hover:border-accent-300 hover:shadow-2xl transition-all group">
-              <div className="w-20 h-20 bg-gradient-to-br from-accent-500 to-yellow-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:scale-110 transition-transform">
+            <div className="bg-white rounded-3xl p-10 text-center shadow-xl border-2 border-orange-100 hover:border-emerald-300 hover:shadow-2xl transition-all group">
+              <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:scale-110 transition-transform">
                 <CheckCircle className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-2xl font-black text-neutral-900 mb-4">Verified Listings</h3>
