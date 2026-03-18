@@ -216,7 +216,7 @@ const LandingPage = () => {
             <div className={`group relative p-8 rounded-3xl bg-white shadow-lg hover:shadow-2xl border-2 border-amber-100 hover:border-accent-300 transition-all duration-700 ${featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-100 translate-y-5'}`} style={{ transitionDelay: featuresVisible ? '200ms' : '0ms' }}>
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-100 to-yellow-50 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
               <div className="relative">
-                <div className="inline-flex p-4 bg-gradient-to-br from-accent-500 to-yellow-500 rounded-2xl mb-6 shadow-xl group-hover:scale-110 transition-transform">
+                <div className="inline-flex p-4 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl mb-6 shadow-xl group-hover:scale-110 transition-transform">
                   <CheckCircle className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-neutral-900 mb-3">Verified Listings</h3>
