@@ -17,19 +17,19 @@ const StatCard = ({ title, value, icon: Icon, trend, trendValue, className = '' 
   const gradientClass = colors[iconName] || 'from-primary-500 to-primary-600'
   
   return (
-    <Card className={`p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-xl ${className}`}>
+    <Card className={`p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-xl border-2 border-orange-100 ${className}`}>
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="mt-2 text-3xl font-bold text-gray-900 transition-all duration-300">{value}</p>
+          <p className="text-sm font-medium text-neutral-500">{title}</p>
+          <p className="mt-2 text-3xl font-black text-neutral-900 transition-all duration-300">{value}</p>
           {trend && (
-            <p className={`mt-2 text-sm font-semibold ${trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+            <p className={`mt-2 text-sm font-semibold ${trend === 'up' ? 'text-emerald-600' : 'text-red-600'}`}>
               {trend === 'up' ? '↑' : '↓'} {trendValue}
             </p>
           )}
         </div>
         {Icon && (
-          <div className={`p-3 bg-gradient-to-br ${gradientClass} rounded-xl shadow-lg transform transition-transform duration-300 hover:rotate-6`}>
+          <div className={`p-3 bg-gradient-to-br ${gradientClass} rounded-2xl shadow-lg transform transition-transform duration-300 hover:rotate-6`}>
             <Icon className="w-6 h-6 text-white" />
           </div>
         )}
