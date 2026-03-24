@@ -47,10 +47,10 @@ const Navbar = ({ transparent = false }) => {
                 >
                   <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
                     <span className="text-sm font-semibold text-primary-600">
-                      {user.full_name?.split(' ').map(n => n[0]).join('') || 'U'}
+                      {(user?.full_name?.[0] || user?.email?.[0] || 'U').toUpperCase()}
                     </span>
                   </div>
-                  <span className="text-sm font-medium text-gray-900">{user.full_name}</span>
+                  <span className="text-sm font-medium text-gray-900">{user.full_name || user.email}</span>
                   <ChevronDown className="w-4 h-4 text-gray-600" />
                 </button>
                 
