@@ -27,13 +27,13 @@ const Navbar = ({ transparent = false }) => {
           </Link>
           
           <div className="hidden md:flex items-center gap-8">
-            <Link to="/marketplace" className="text-neutral-600 hover:text-primary-600 transition-colors font-medium">
+            <Link to="/marketplace" className="text-neutral-600 hover:text-primary-600 transition-colors font-semibold">
               Marketplace
             </Link>
-            <Link to={user ? "/seller/dashboard" : "/login"} className="text-neutral-600 hover:text-primary-600 transition-colors font-medium">
+            <Link to={user ? "/seller/dashboard" : "/login"} className="text-neutral-600 hover:text-primary-600 transition-colors font-semibold">
               Sell
             </Link>
-            <Link to="/how-it-works" className="text-neutral-600 hover:text-primary-600 transition-colors font-medium">
+            <Link to="/how-it-works" className="text-neutral-600 hover:text-primary-600 transition-colors font-semibold">
               How it Works
             </Link>
           </div>
