@@ -98,7 +98,8 @@ const BuyerDashboard = () => {
                   {purchasedChannels.map(channel => (
                     <Card key={channel.id} hover className="overflow-hidden border-2 border-orange-100">
                       <div className="aspect-video bg-gradient-to-br from-primary-100 to-orange-100">
-                        <img src={channel.banner} alt={channel.name} className="w-full h-full object-cover" />
+                        <img src={channel.banner} alt={channel.name} className="w-full h-full object-cover"
+                          onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80' }} />
                       </div>
                       <div className="p-5">
                         <h3 className="font-black text-lg text-neutral-900 mb-1">{channel.name}</h3>
@@ -129,7 +130,8 @@ const BuyerDashboard = () => {
                   {savedChannels.map(channel => (
                     <Card key={channel.id} hover className="overflow-hidden border-2 border-orange-100">
                       <div className="aspect-video bg-gradient-to-br from-primary-100 to-orange-100">
-                        <img src={channel.banner} alt={channel.name} className="w-full h-full object-cover" />
+                        <img src={channel.banner} alt={channel.name} className="w-full h-full object-cover"
+                          onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80' }} />
                       </div>
                       <div className="p-5">
                         <h3 className="font-black text-lg text-neutral-900 mb-1">{channel.name}</h3>

@@ -11,7 +11,7 @@ export const channels = [
     country: 'United States',
     avgViews: '45K',
     engagement: '4.2%',
-    banner: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=450&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80',
     description: 'Established tech review channel with consistent growth and engaged audience.',
     seller: {
       name: 'John Smith',
@@ -31,7 +31,7 @@ export const channels = [
     country: 'United Kingdom',
     avgViews: '32K',
     engagement: '5.1%',
-    banner: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=450&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80',
     description: 'Growing fitness channel with loyal community and multiple revenue streams.',
     seller: {
       name: 'Sarah Johnson',
@@ -51,7 +51,7 @@ export const channels = [
     country: 'Canada',
     avgViews: '78K',
     engagement: '6.3%',
-    banner: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=450&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80',
     description: 'Popular gaming channel with high engagement and sponsorship opportunities.',
     seller: {
       name: 'Mike Chen',
@@ -71,7 +71,7 @@ export const channels = [
     country: 'Australia',
     avgViews: '18K',
     engagement: '4.8%',
-    banner: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=450&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80',
     description: 'Niche cooking channel with dedicated audience and growth potential.',
     seller: {
       name: 'Emma Wilson',
@@ -91,7 +91,7 @@ export const channels = [
     country: 'United States',
     avgViews: '52K',
     engagement: '5.5%',
-    banner: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=450&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80',
     description: 'Stunning travel content with international audience and brand deals.',
     seller: {
       name: 'Alex Rodriguez',
@@ -111,7 +111,7 @@ export const channels = [
     country: 'United States',
     avgViews: '28K',
     engagement: '4.5%',
-    banner: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop',
+    banner: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=80',
     description: 'Educational finance channel with professional content and steady growth.',
     seller: {
       name: 'David Lee',
