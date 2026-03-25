@@ -6,6 +6,8 @@ import Card from '../components/Card'
 import Badge from '../components/Badge'
 import { channels, transactions } from '../data/mockData'
 
+
+
 const BuyerDashboard = () => {
   const purchasedChannels = channels.slice(0, 2)
   const savedChannels = channels.slice(2, 4)
@@ -85,8 +87,6 @@ const BuyerDashboard = () => {
                 />
               </div>
             </div>
-            
-            {/* Purchased Channels */}
             <div className="animate-fade-in">
               <Card className="mb-8">
               <div className="p-6 border-b border-orange-100">
