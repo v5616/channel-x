@@ -12,6 +12,7 @@ const BuyerDashboard = () => {
   const purchasedChannels = channels.slice(0, 2)
   const savedChannels = channels.slice(2, 4)
   
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
       <Navbar />
