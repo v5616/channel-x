@@ -16,16 +16,18 @@ const SellerProfilePage = () => {
     location: 'United States',
     verified: true,
     responseTime: 'Within 2 hours',
-    bio: 'Professional YouTube channel broker with 5+ years of experience. Specialized in tech, gaming, and lifestyle channels.',
+    bio: 'Professional YouTube channel broker with 5+ years of experience. Specialized in tech, gaming, and lifestyle channels. All listings are thoroughly verified with complete documentation.',
     stats: { activeListings: 3, totalSold: 12, totalRevenue: '$1.2M', successRate: '98%' },
   }
 
   const sellerChannels = channels.slice(0, 3)
 
+  
+
   const reviews = [
-    { id: 1, buyer: 'Sarah Johnson', rating: 5, date: 'Feb 10, 2026', comment: 'Excellent seller! Very professional and responsive.' },
-    { id: 2, buyer: 'Mike Chen', rating: 5, date: 'Feb 5, 2026', comment: 'Great experience. Channel metrics were exactly as described.' },
-    { id: 3, buyer: 'Emma Wilson', rating: 4, date: 'Jan 28, 2026', comment: 'Good seller, quick response time. Overall satisfied.' },
+    { id: 1, buyer: 'Sarah Johnson', rating: 5, date: 'Feb 10, 2026', comment: 'Excellent seller! Very professional and responsive. The channel transfer was smooth and all documentation was provided.' },
+    { id: 2, buyer: 'Mike Chen', rating: 5, date: 'Feb 5, 2026', comment: 'Great experience. The channel metrics were exactly as described. Highly recommend!' },
+    { id: 3, buyer: 'Emma Wilson', rating: 4, date: 'Jan 28, 2026', comment: 'Good seller, quick response time. Minor delay in transfer but overall satisfied.' },
   ]
 
   return (
@@ -33,6 +35,8 @@ const SellerProfilePage = () => {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-6">
+
+          {/* Sidebar */}
           <div className="lg:col-span-1">
             <Card className="p-6 sticky top-24 border-2 border-orange-100 shadow-xl">
               <div className="text-center mb-6">
@@ -54,7 +58,9 @@ const SellerProfilePage = () => {
                   <span className="text-neutral-500 text-sm">({seller.totalSales} sales)</span>
                 </div>
               </div>
+
               <p className="text-sm text-neutral-600 leading-relaxed mb-6 pb-6 border-b-2 border-orange-100">{seller.bio}</p>
+
               <div className="space-y-2 mb-6 pb-6 border-b-2 border-orange-100">
                 {[
                   { label: 'Active Listings', value: seller.stats.activeListings },
@@ -62,29 +68,38 @@ const SellerProfilePage = () => {
                   { label: 'Total Revenue', value: seller.stats.totalRevenue },
                   { label: 'Success Rate', value: seller.stats.successRate, green: true },
                 ].map(item => (
-                  <div key={item.label} className="flex justify-between items-center p-2 rounded-xl hover:bg-orange-50">
+                  <div key={item.label} className="flex justify-between items-center p-2 rounded-xl hover:bg-orange-50 transition-colors">
                     <span className="text-sm text-neutral-500">{item.label}</span>
                     <span className={`font-black text-sm ${item.green ? 'text-emerald-600' : 'text-neutral-900'}`}>{item.value}</span>
                   </div>
                 ))}
               </div>
+
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-2 text-sm text-neutral-500">
-                  <MapPin className="w-4 h-4 text-orange-400" />{seller.location}
+                  <MapPin className="w-4 h-4 text-orange-400" />
+                  {seller.location}
                 </div>
                 <div className="flex items-center gap-2 text-sm text-neutral-500">
-                  <Calendar className="w-4 h-4 text-orange-400" />Member since {seller.memberSince}
+                  <Calendar className="w-4 h-4 text-orange-400" />
+                  Member since {seller.memberSince}
                 </div>
                 <div className="flex items-center gap-2 text-sm text-neutral-500">
-                  <Package className="w-4 h-4 text-orange-400" />Response: {seller.responseTime}
+                  <Package className="w-4 h-4 text-orange-400" />
+                  Response: {seller.responseTime}
                 </div>
               </div>
+
               <Link to="/chat">
-                <Button className="w-full"><MessageCircle className="w-4 h-4" />Send Message</Button>
+                <Button className="w-full">
+                  <MessageCircle className="w-4 h-4" />
+                  Send Message
+                </Button>
               </Link>
             </Card>
           </div>
 
+          {/* Main */}
           <div className="lg:col-span-2">
             <div className="grid grid-cols-4 gap-4 mb-6">
               {[
