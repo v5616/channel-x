@@ -14,6 +14,19 @@ import AdminDashboard from './pages/AdminDashboard'
 import ChatPage from './pages/ChatPage'
 import ApiTestPage from './pages/ApiTestPage'
 
+const NotFoundPage = () => (
+  <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 flex items-center justify-center">
+    <div className="text-center">
+      <div className="text-8xl font-black text-primary-600 mb-4">404</div>
+      <h1 className="text-3xl font-black text-neutral-900 mb-2">Page Not Found</h1>
+      <p className="text-neutral-500 mb-8">The page you're looking for doesn't exist.</p>
+      <a href="/" className="px-6 py-3 bg-gradient-to-r from-primary-600 to-orange-500 text-white rounded-2xl font-bold shadow-lg hover:opacity-90 transition-opacity">
+        Go Home
+      </a>
+    </div>
+  </div>
+)
+
 function App() {
   return (
     <Router>
@@ -32,11 +45,11 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/api-test" element={<ApiTestPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AuthProvider>
     </Router>
   )
 }
-
 
 export default App
