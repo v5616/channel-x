@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import apiService from '../services/api'
 
 const AuthContext = createContext()
@@ -17,27 +16,20 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check if user is logged in (has token)
     const token = localStorage.getItem('channelx_token')
     if (token) {
-      // Try to get current user from API
       apiService.getCurrentUser()
-        .then(userData => {
-          setUser(userData)
-        })
-        .catch(error => {
-          console.error('Failed to get current user:', error)
-          // Token might be invalid, remove it
+        .then(userData => setUser(userData))
+        .catch(() => {
+          // Token invalid — clear it silently
           localStorage.removeItem('channelx_token')
           apiService.logout()
         })
-        .finally(() => {
-          setLoading(false)
-        })
+        .finally(() => setLoading(false))
     } else {
       setLoading(false)
     }
-  }, [])
+  }, []) // runs once on mount only
 
   const login = async (email, password) => {
     try {

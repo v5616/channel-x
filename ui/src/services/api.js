@@ -28,12 +28,16 @@ class ApiService {
       const response = await fetch(url, config)
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        const errorText = await response.text().catch(() => '')
+        throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`)
       }
       
       return await response.json()
     } catch (error) {
-      console.error('API request failed:', error)
+      // Don't log CORB/network errors as they flood the console
+      if (!error.message?.includes('Failed to fetch') && !error.message?.includes('NetworkError')) {
+        console.error('API request failed:', error.message)
+      }
       throw error
     }
   }

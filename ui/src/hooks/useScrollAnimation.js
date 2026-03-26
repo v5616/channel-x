@@ -1,38 +1,28 @@
 import { useEffect, useRef, useState } from 'react'
 
-export const useScrollAnimation = (options = {}) => {
+export const useScrollAnimation = ({ threshold = 0.1, rootMargin = '0px', once = false } = {}) => {
   const elementRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
 
+  // Stable primitive deps — no object reference issues
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
-          if (options.once) {
-            observer.unobserve(entry.target)
-          }
-        } else if (!options.once) {
+          if (once) observer.unobserve(entry.target)
+        } else if (!once) {
           setIsVisible(false)
         }
       },
-      {
-        threshold: options.threshold || 0.1,
-        rootMargin: options.rootMargin || '0px',
-      }
+      { threshold, rootMargin }
     )
 
-    const currentElement = elementRef.current
-    if (currentElement) {
-      observer.observe(currentElement)
-    }
+    const el = elementRef.current
+    if (el) observer.observe(el)
 
-    return () => {
-      if (currentElement) {
-        observer.unobserve(currentElement)
-      }
-    }
-  }, [options.threshold, options.rootMargin, options.once])
+    return () => { if (el) observer.unobserve(el) }
+  }, [threshold, rootMargin, once]) // primitives — stable references
 
   return [elementRef, isVisible]
 }
