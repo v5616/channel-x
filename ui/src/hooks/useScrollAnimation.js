@@ -17,6 +17,8 @@ export const useScrollAnimation = ({ threshold = 0.1, rootMargin = '0px', once =
       { threshold, rootMargin }
     )
 
+
+    
     const el = elementRef.current
     if (el) observer.observe(el)
 
