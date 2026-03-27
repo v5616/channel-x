@@ -13,6 +13,7 @@ const SellerDashboard = () => {
   const [attachments, setAttachments] = useState([])
   const [links, setLinks] = useState([{ label: '', url: '' }])
   const [activeTab, setActiveTab] = useState('dashboard')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files)
@@ -53,51 +54,50 @@ const SellerDashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
       <Navbar />
       
-      <div className="flex">
+      <div className="flex relative">
+        {/* Mobile sidebar overlay */}
+        {sidebarOpen && (
+          <div className="fixed inset-0 bg-black/40 z-20 lg:hidden" onClick={() => setSidebarOpen(false)} />
+        )}
+
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r border-orange-100 min-h-screen sticky top-16 shadow-sm">
+        <aside className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:sticky top-0 lg:top-16 z-30 lg:z-auto w-64 bg-white border-r border-orange-100 h-screen lg:min-h-screen shadow-sm transition-transform duration-300`}>
+          <div className="flex items-center justify-between p-4 lg:hidden border-b border-orange-100">
+            <span className="font-black text-neutral-900">Menu</span>
+            <button onClick={() => setSidebarOpen(false)} className="p-1 hover:bg-orange-50 rounded-lg">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
           <nav className="p-4 space-y-1">
-            <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold w-full text-left transition-all ${
-                activeTab === 'dashboard' ? 'text-white bg-gradient-to-r from-primary-600 to-orange-500 shadow-lg' : 'text-neutral-600 hover:bg-orange-50 hover:text-primary-600'
-              }`}
-            >
-              <LayoutDashboard className="w-5 h-5" />
-              Dashboard
+            <button onClick={() => { setActiveTab('dashboard'); setSidebarOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold w-full text-left transition-all ${activeTab === 'dashboard' ? 'text-white bg-gradient-to-r from-primary-600 to-orange-500 shadow-lg' : 'text-neutral-600 hover:bg-orange-50 hover:text-primary-600'}`}>
+              <LayoutDashboard className="w-5 h-5" />Dashboard
             </button>
-            <button
-              onClick={() => setActiveTab('listings')}
-              className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold w-full text-left transition-all ${
-                activeTab === 'listings' ? 'text-white bg-gradient-to-r from-primary-600 to-orange-500 shadow-lg' : 'text-neutral-600 hover:bg-orange-50 hover:text-primary-600'
-              }`}
-            >
-              <Package className="w-5 h-5" />
-              My Listings
+            <button onClick={() => { setActiveTab('listings'); setSidebarOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold w-full text-left transition-all ${activeTab === 'listings' ? 'text-white bg-gradient-to-r from-primary-600 to-orange-500 shadow-lg' : 'text-neutral-600 hover:bg-orange-50 hover:text-primary-600'}`}>
+              <Package className="w-5 h-5" />My Listings
             </button>
-            <button
-              onClick={() => setActiveTab('earnings')}
-              className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold w-full text-left transition-all ${
-                activeTab === 'earnings' ? 'text-white bg-gradient-to-r from-primary-600 to-orange-500 shadow-lg' : 'text-neutral-600 hover:bg-orange-50 hover:text-primary-600'
-              }`}
-            >
-              <DollarSign className="w-5 h-5" />
-              Earnings
+            <button onClick={() => { setActiveTab('earnings'); setSidebarOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-3 rounded-2xl font-semibold w-full text-left transition-all ${activeTab === 'earnings' ? 'text-white bg-gradient-to-r from-primary-600 to-orange-500 shadow-lg' : 'text-neutral-600 hover:bg-orange-50 hover:text-primary-600'}`}>
+              <DollarSign className="w-5 h-5" />Earnings
             </button>
-            <Link to="/chat" className="flex items-center gap-3 px-4 py-3 text-neutral-600 hover:bg-orange-50 hover:text-primary-600 rounded-2xl font-semibold transition-all">
-              <MessageCircle className="w-5 h-5" />
-              Messages
+            <Link to="/chat" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 px-4 py-3 text-neutral-600 hover:bg-orange-50 hover:text-primary-600 rounded-2xl font-semibold transition-all">
+              <MessageCircle className="w-5 h-5" />Messages
             </Link>
             <Link to="#" className="flex items-center gap-3 px-4 py-3 text-neutral-600 hover:bg-orange-50 hover:text-primary-600 rounded-2xl font-semibold transition-all">
-              <Settings className="w-5 h-5" />
-              Settings
+              <Settings className="w-5 h-5" />Settings
             </Link>
           </nav>
         </aside>
         
         {/* Main Content */}
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-4 lg:p-8 min-w-0">
           <div className="max-w-7xl mx-auto">
+            {/* Mobile menu button */}
+            <button onClick={() => setSidebarOpen(true)}
+              className="lg:hidden mb-4 flex items-center gap-2 px-4 py-2 bg-white border-2 border-orange-100 rounded-2xl font-semibold text-neutral-700 shadow-sm">
+              <LayoutDashboard className="w-4 h-4" />Menu
+            </button>
             {/* Dashboard Tab */}
             {activeTab === 'dashboard' && (
               <>
