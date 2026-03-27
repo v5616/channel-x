@@ -3,10 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 export const useScrollAnimation = ({ threshold = 0.1, rootMargin = '0px', once = false } = {}) => {
   const elementRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
-
-
-
-  
   // Stable primitive deps — no object reference issues
   useEffect(() => {
     const observer = new IntersectionObserver(

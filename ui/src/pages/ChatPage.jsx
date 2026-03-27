@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Send, Paperclip, MoreVertical } from 'lucide-react'
+import { ArrowLeft, Send, Paperclip, MoreVertical, Menu, X } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import Card from '../components/Card'
 import Button from '../components/Button'
@@ -10,6 +10,7 @@ const ChatPage = () => {
   const [activeConversation, setActiveConversation] = useState(conversations[0])
   const [messageText, setMessageText] = useState('')
   const [msgs, setMsgs] = useState(initialMessages)
+  const [showSidebar, setShowSidebar] = useState(true)
 
   const handleSend = () => {
     if (!messageText.trim()) return
@@ -39,14 +40,16 @@ const ChatPage = () => {
         <Card className="overflow-hidden h-[calc(100vh-200px)] border-2 border-orange-100 shadow-2xl">
           <div className="flex h-full">
             {/* Conversations List */}
-            <div className="w-80 border-r-2 border-orange-100 flex flex-col">
-              <div className="p-6 border-b-2 border-orange-100 bg-orange-50">
+            <div className={`${showSidebar ? 'flex' : 'hidden'} md:flex w-full md:w-80 border-r-2 border-orange-100 flex-col absolute md:relative inset-0 z-10 bg-white md:z-auto`}>
+              <div className="p-4 md:p-6 border-b-2 border-orange-100 bg-orange-50 flex items-center justify-between">
                 <h2 className="text-xl font-black text-neutral-900">Messages</h2>
+                <button onClick={() => setShowSidebar(false)} className="md:hidden p-1 hover:bg-orange-100 rounded-lg">
+                  <X className="w-5 h-5 text-neutral-500" />
+                </button>
               </div>
-
               <div className="flex-1 overflow-y-auto">
                 {conversations.map(conversation => (
-                  <button key={conversation.id} onClick={() => setActiveConversation(conversation)}
+                  <button key={conversation.id} onClick={() => { setActiveConversation(conversation); setShowSidebar(false) }}
                     className={`w-full p-4 border-b border-orange-50 hover:bg-orange-50 transition-colors text-left ${
                       activeConversation.id === conversation.id ? 'bg-primary-50 border-l-4 border-l-primary-500' : ''
                     }`}>
@@ -57,12 +60,12 @@ const ChatPage = () => {
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start mb-1">
                           <h3 className="font-bold text-neutral-900 truncate">{conversation.user}</h3>
-                          <span className="text-xs text-neutral-400">{conversation.time}</span>
+                          <span className="text-xs text-neutral-400 shrink-0 ml-2">{conversation.time}</span>
                         </div>
                         <p className="text-sm text-neutral-500 truncate">{conversation.lastMessage}</p>
                       </div>
                       {conversation.unread > 0 && (
-                        <div className="w-5 h-5 bg-gradient-to-br from-primary-600 to-orange-500 rounded-full flex items-center justify-center shadow-md">
+                        <div className="w-5 h-5 bg-gradient-to-br from-primary-600 to-orange-500 rounded-full flex items-center justify-center shadow-md shrink-0">
                           <span className="text-xs text-white font-black">{conversation.unread}</span>
                         </div>
                       )}
@@ -73,11 +76,14 @@ const ChatPage = () => {
             </div>
 
             {/* Chat Window */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col min-w-0">
               {/* Chat Header */}
-              <div className="p-6 border-b-2 border-orange-100 bg-orange-50 flex justify-between items-center">
+              <div className="p-4 md:p-6 border-b-2 border-orange-100 bg-orange-50 flex justify-between items-center">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-orange-500 rounded-full flex items-center justify-center shadow-md">
+                  <button onClick={() => setShowSidebar(true)} className="md:hidden p-2 hover:bg-orange-100 rounded-xl mr-1">
+                    <Menu className="w-5 h-5 text-neutral-500" />
+                  </button>
+                  <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-orange-500 rounded-full flex items-center justify-center shadow-md shrink-0">
                     <span className="text-white font-black text-sm">{activeConversation.avatar}</span>
                   </div>
                   <div>
@@ -91,10 +97,10 @@ const ChatPage = () => {
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
                 {msgs.map(message => (
                   <div key={message.id} className={`flex ${message.sender === 'buyer' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-md px-4 py-3 rounded-2xl shadow-sm ${
+                    <div className={`max-w-[80%] md:max-w-md px-4 py-3 rounded-2xl shadow-sm ${
                       message.sender === 'buyer'
                         ? 'bg-gradient-to-r from-primary-600 to-orange-500 text-white'
                         : 'bg-white text-neutral-900 border-2 border-orange-100'
@@ -109,18 +115,17 @@ const ChatPage = () => {
               </div>
 
               {/* Message Input */}
-              <div className="p-6 border-t-2 border-orange-100 bg-orange-50">
-                <div className="flex gap-3">
-                  <button className="p-3 hover:bg-orange-100 rounded-2xl transition-colors">
+              <div className="p-3 md:p-6 border-t-2 border-orange-100 bg-orange-50">
+                <div className="flex gap-2 md:gap-3">
+                  <button className="p-2 md:p-3 hover:bg-orange-100 rounded-2xl transition-colors shrink-0">
                     <Paperclip className="w-5 h-5 text-neutral-500" />
                   </button>
                   <input type="text" value={messageText} onChange={(e) => setMessageText(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Type your message..."
-                    className="flex-1 px-4 py-3 border-2 border-orange-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white" />
-                  <Button onClick={handleSend} disabled={!messageText.trim()}>
-                    <Send className="w-5 h-5" />
-                    Send
+                    onKeyDown={handleKeyDown} placeholder="Type your message..."
+                    className="flex-1 px-4 py-3 border-2 border-orange-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white min-w-0" />
+                  <Button onClick={handleSend} disabled={!messageText.trim()} size="sm" className="shrink-0">
+                    <Send className="w-4 h-4" />
+                    <span className="hidden sm:inline">Send</span>
                   </Button>
                 </div>
               </div>

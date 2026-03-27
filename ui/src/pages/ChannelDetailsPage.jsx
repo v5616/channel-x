@@ -34,7 +34,7 @@ const ChannelDetailsPage = () => {
             <div className="flex flex-col lg:flex-row justify-between gap-6">
               <div className="flex-1">
                 <div className="flex flex-wrap items-start gap-3 mb-3">
-                  <h1 className="text-4xl font-black text-neutral-900">{channel.name}</h1>
+          <h1 className="text-2xl sm:text-4xl font-black text-neutral-900">{channel.name}</h1>
                   {channel.verified && <Badge variant="success">Verified</Badge>}
                   {channel.monetized && <Badge variant="primary">Monetized</Badge>}
                 </div>
@@ -68,7 +68,7 @@ const ChannelDetailsPage = () => {
         </Card>
 
         {/* Key Metrics */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <Card className="p-6 border-2 border-orange-100">
             <div className="flex items-center gap-3 mb-2">
               <div className="p-2 bg-gradient-to-br from-primary-500 to-orange-500 rounded-xl">
