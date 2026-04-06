@@ -8,6 +8,10 @@ import Card from '../components/Card'
 import Badge from '../components/Badge'
 import { channels } from '../data/mockData'
 
+
+
+
+
 const ChannelDetailsPage = () => {
   const { id } = useParams()
   const channel = channels.find(c => c.id === parseInt(id)) || channels[0]
