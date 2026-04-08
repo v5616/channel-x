@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Button from './Button'
 import { useAuth } from '../context/AuthContext'
 
+
 const Navbar = ({ transparent = false }) => {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
@@ -17,6 +18,8 @@ const Navbar = ({ transparent = false }) => {
     navigate('/')
   }
 
+
+  console.log(showDropdown,mobileOpen,"@@@")
   return (
     <nav className={`${transparent ? 'bg-transparent' : 'bg-white border-b border-orange-100'} sticky top-0 z-50 shadow-sm`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
