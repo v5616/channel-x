@@ -124,7 +124,7 @@ const MarketplacePage = () => {
               <Sparkles className="w-4 h-4" />
               <span>{filteredChannels.length} Premium Channels Available</span>
             </div>
-            <h1 className="text-5xl font-black text-white mb-4 tracking-tight">
+            <h1 className="text-3xl sm:text-5xl font-black text-white mb-4 tracking-tight">
               Discover Your Perfect Channel
             </h1>
             <p className="text-xl text-orange-50 font-light">
@@ -196,11 +196,7 @@ const MarketplacePage = () => {
                 </div>
                 {activeFiltersCount > 0 && (
                   <button
-                    onClick={() => {
-                      setPriceRange('all')
-                      setNiche('all')
-                      setMonetized(false)
-                    }}
+                    onClick={clearFilters}
                     className="text-sm text-primary-600 hover:text-primary-700 font-bold"
                   >
                     Clear all

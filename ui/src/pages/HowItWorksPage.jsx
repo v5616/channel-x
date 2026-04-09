@@ -49,7 +49,7 @@ const HowItWorksPage = () => {
             <p className="text-xl text-neutral-600 font-light">Follow these simple steps to purchase your next YouTube channel</p>
           </div>
           
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Step 1 */}
             <div className="relative group">
               <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-primary-300 hover:shadow-2xl transition-all">
@@ -129,7 +129,7 @@ const HowItWorksPage = () => {
             <p className="text-xl text-neutral-600 font-light">List your YouTube channel and reach thousands of potential buyers</p>
           </div>
           
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Step 1 */}
             <div className="relative group">
               <div className="bg-white rounded-3xl p-8 h-full shadow-xl border-2 border-orange-100 hover:border-primary-300 hover:shadow-2xl transition-all">
