@@ -19,7 +19,7 @@ const ChannelCard = ({ channel }) => {
 
   return (
     <Link to={`/channel/${adaptedChannel.id}`}>
-      <Card hover className="overflow-hidden">
+      <Card hover className="overflow-hidden border-2 border-orange-100 hover:border-primary-300 transition-all">
         <div className="aspect-video bg-gradient-to-br from-primary-100 to-primary-200 relative">
           <img 
             src={adaptedChannel.banner} 
