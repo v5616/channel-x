@@ -3,7 +3,12 @@ import { Users, DollarSign, TrendingUp } from 'lucide-react'
 import Card from './Card'
 import Badge from './Badge'
 const ChannelCard = ({ channel }) => {
-  // Adapter to handle both API format and mock data format
+  // Adapter to handle both API format and 
+  // mock data format
+
+
+
+  
   const adaptedChannel = {
     id: channel.id,
     name: channel.channel_name || channel.name,
