@@ -6,6 +6,9 @@ const ChannelCard = ({ channel }) => {
   // Adapter to handle both API format and 
   // mock data format
 
+
+
+  
   const adaptedChannel = {
     id: channel.id,
     name: channel.channel_name || channel.name,
