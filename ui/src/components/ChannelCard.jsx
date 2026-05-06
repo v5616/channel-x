@@ -7,6 +7,11 @@ const ChannelCard = ({ channel }) => {
   // mock data format
 
 
+
+
+
+
+
   
   const adaptedChannel = {
     id: channel.id,
